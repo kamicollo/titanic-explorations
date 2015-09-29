@@ -40,7 +40,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Predict Titanic passenger survival</a>
+          <a class="navbar-brand" href="#">Titanic passenger survival</a>
         </div>
         <!--
         <div id="navbar" class="navbar-collapse collapse">
@@ -55,9 +55,9 @@
       <div class="row">
         <div id="left-sidebar" class="col-sm-2 col-md-2 sidebar">
             <p>
-            This web app allows you to try out several ML algorithms on a real set of data taken from <a href="https://www.kaggle.com/c/titanic/">Kaggle</a>. 
+            This web app allows you to try out explore relationships between variables in a real set of data taken from <a href="https://www.kaggle.com/c/titanic/">Titanic passenger survival competition on Kaggle</a>. 
             <br>
-            <br>You can choose the algorithms themselves, tinker with their tuning parameters as well as choose which features to incorporate. And, of course, see the results instantly!
+            <br>Choose which variables to plot, how to plot them and which factor to use for filling!
             </p>
             <br><br>
             <footer class=footer>
@@ -67,107 +67,128 @@
         <div class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
             <div class=row>
                 <div class="col-md-3">
-                    <h3>Algorithm selection</h3>
-                    <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="algorithm">ML algorithm</label>
-                        <select id="algorithm" class="form-control" name=algorithm>
-                            <option value="glm">Logistic regression</option>
-                            <option value="svmPoly">SVM</option>
-                            <option value="rf">Random forests</option>
-                            <option value="rpart">Decision trees</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-group shiny-input-container">
-                            <label for="threshold">
-                                Probability threshold to predict survival</label>
-                                <input class="js-range-slider" id="threshold" data-min="0" data-max="1" 
-                                    data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" 
-                                    data-grid-snap="false" data-prettify-separator="," data-keyboard="true"
-                                    data-keyboard-step="1.11111111111111"
-                                    data-drag-interval="true" data-data-type="number"/>
-                        </div>
-                    </div>
-                    <div id ="cvtech" class="form-group shiny-input-radiogroup shiny-input-container">
-                        <label>Cross validation technique</label>
-                        <div class="shiny-options-group">
-                            <div class=radio>
-                                <label>
-                                    <input type="radio" name="cvtech" id="cvtech1" value="None">
-                                    None
-                                </label>
-                            </div>
-                            <div class=radio>
-                                <label>
-                                    <input type="radio" name="cvtech" id="cvtech2" value="cv10" checked>
-                                    10-fold cross-validation
-                                </label>
-                            </div>
-                            <div class=radio>
-                                <label>
-                                    <input type="radio" name="cvtech" id="cvtech1" value="loocv">
-                                    Leave-one-out cross validation
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                <div class="col-md-3">
-                    <h3>Feature selection</h3>
+                    <h3>Variable selection</h3>
                     
-                    <div id="features" class="form-group shiny-input-checkboxgroup shiny-input-container">
-                        <label>Features to be included</label>
+                    <div id="features" class="form-group shiny-input-radiogroup shiny-input-container">
+                        <label>Variable on X axis</label>
                         <div class="shiny-options-group">
-                            <div class="checkbox">
-                                <label><input type="checkbox" name=features value="pclass" checked>Passenger class</label>
+                            <div class="radio">
+                                <label><input type="radio" name=features value="pclass">Passenger class</label>
                             </div>
-                            <div class="checkbox">
+                            <div class="radio">
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name=features value="name">Name</label>
+                            <div class="radio">
+                                <label><input type="radio" name=features value="name">Name</label>
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name=features value="sex" checked>Sex</label>
+                            <div class="radio">
+                                <label><input type="radio" name=features value="sex">Sex</label>
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name=features value="age" checked>Age</label>
+                            <div class="radio">
+                                <label><input type="radio" name=features value="age">Age</label>
                             </div>
-                            <div class="checkbox">
+                            <div class="radio">
                                 <label>
-                                    <input type="checkbox" name=features value="sibsb">
+                                    <input type="radio" name=features value="sibsp">
                                     Number of siblings/spouses aboard
                                 </label>
                             </div>
-                            <div class="checkbox">
+                            <div class="radio">
                                 <label>
-                                    <input type="checkbox" name=features value="parch">
+                                    <input type="radio" name=features value="parch">
                                     Number of parents/children aboard
                                 </label>
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name=features value="ticket">Ticket number</label>
+                            <div class="radio">
+                                <label><input type="radio" name=features value="ticket">Ticket number</label>
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name=features value="fare">Passenger Fare</label>
+                            <div class="radio">
+                                <label><input type="radio" name=features value="fare" checked>Passenger Fare</label>
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name=features value="cabin">Cabin</label>
+                            <div class="radio">
+                                <label><input type="radio" name=features value="cabin">Cabin</label>
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name=features value="embarked">Port of Embarkation</label>
+                            <div class="radio">
+                                <label><input type="radio" name=features value="embarked">Port of Embarkation</label>
                             </div>
                         </div>
                     </div>
                     
+                    <div id="featuresy" class="form-group shiny-input-radiogroup shiny-input-container">
+                        <label>Variable on Y axis</label>
+                        <div class="shiny-options-group">
+                            
+                            <div class="radio">
+                                <label><input type="radio" name=featuresy value="">None</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name=featuresy value="pclass">Passenger class</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name=featuresy value="name">Name</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name=featuresy value="sex">Sex</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name=featuresy value="age" checked>Age</label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name=featuresy value="sibsp">
+                                    Number of siblings/spouses aboard
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name=featuresy value="parch">
+                                    Number of parents/children aboard
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name=featuresy value="ticket">Ticket number</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name=featuresy value="fare">Passenger Fare</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name=featuresy value="cabin">Cabin</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name=featuresy value="embarked">Port of Embarkation</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6 bg-success">
-                    <h3 class="text-center">Algorithm evaluation</h3>
-                    <p id="shiny_algorithm" class="shiny-text-output"></p>
-                    <p id="shiny_threshold" class="shiny-text-output"></p>
-                    <p id="shiny_cvtechnique" class="shiny-text-output"></p>
-                    <p id="shiny_features" class="shiny-text-output"></p>
+                <div class="col-md-3">
+                    <h3>Chart selection</h3>
+                    <div id ="chart" class="form-group shiny-input-radiogroup shiny-input-container">
+                        <label>Chart type</label>
+                        <div class="shiny-options-group">
+                            <div class=radio>
+                                <label>
+                                    <input type="radio" name="chart" id="cvtech1" value="density">
+                                    Density plot (X variable; split by outcome)
+                                </label>
+                            </div>
+                            <div class=radio>
+                                <label>
+                                    <input type="radio" name="chart" id="cvtech2" value="scatter">
+                                    Scatter plot (X - Y variable; outcome used for colour)
+                                </label>
+                            </div>
+                            <div class=radio>
+                                <label>
+                                    <input type="radio" name="chart" id="cvtech1" value="facet" checked>
+                                    Facet scatter plot (same as scatter plot, but additionally faceted by sex and passenger class)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="text-center">Chart output</h3>
+                    
+                    <div id="shiny_plot" class="shiny-plot-output" style="width: 100% ; height: 400px"></div> 
                 </div>
             </div>
         </div>

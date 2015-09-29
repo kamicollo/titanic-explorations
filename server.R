@@ -7,8 +7,8 @@
 
 library(shiny)
 library(data.table)
-library(caret)
-library(rpart)
+library(plotly)
+library(ggplot2)
 
 
 train = fread("data/train.csv")
@@ -18,14 +18,29 @@ setnames(train, names(train), tolower(names(train)))
 test = fread("data/test.csv")
 setnames(test, names(test), tolower(names(test)))
 
+removeOutliers = function(x) {
+    x[x %in% boxplot.stats(x)$out] = NA
+    return(x)
+}
+
+train[, fare := removeOutliers(fare)]
+
 shinyServer(function(input, output) {
     
-    #fitControl = trainControl(method = "none", number = 1)
-    fitControl = trainControl(number = 5)
+        output$shiny_plot = renderPlot({
+            if (input$chart == "density") {
+                ggplot(data = train, aes_string(x=input$features, color=".outcome")) + 
+                    geom_density(binwidth=1, alpha =0.5, position="identity")
+            } else if (input$chart == "scatter") {
+                ggplot(data = train, aes_string(x=input$features, y=input$featuresy, color=".outcome")) + 
+                    geom_point(shape = 1)
+            } else if (input$chart == "facet") {
+                ggplot(data = train, aes_string(x=input$features, y=input$featuresy, color=".outcome")) + 
+                    geom_point(shape = 1) + facet_grid(sex ~ pclass)
+            }
+        })    
     
-    model = train(.outcome ~ ., data = train, model = input$algorithm, trControl = fitControl, family ="binomial")
-    output$shiny_algorithm = renderText({model$results$Accuracy[1]})
-    output$shiny_threshold = renderText({input$threshold})
-    output$shiny_cvtechnique = renderText({input$cvtech})
-    output$shiny_features = renderText({paste(input$features, collapse = " ")})
+    
+
+    
 })
