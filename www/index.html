@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Playing with Titanic datasets</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="shared/ionrangeslider/css/ion.rangeSlider.css">
+    <link rel="stylesheet" href="shared/ionrangeslider/css/normalize.css">
+    <link rel="stylesheet" href="shared/ionrangeslider/css/ion.rangeSlider.skinHTML5.css">
+
+    <!-- Optional theme
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+
+    <!-- Custom styles for this template -->
+    <link href="assets/dashboard.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Predict Titanic passenger survival</a>
+        </div>
+        <!--
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">About</a></li>
+          </ul>
+        </div> -->
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div id="left-sidebar" class="col-sm-2 col-md-2 sidebar">
+            <p>
+            This web app allows you to try out several ML algorithms on a real set of data taken from <a href="https://www.kaggle.com/c/titanic/">Kaggle</a>. 
+            <br>
+            <br>You can choose the algorithms themselves, tinker with their tuning parameters as well as choose which features to incorporate. And, of course, see the results instantly!
+            </p>
+            <br><br>
+            <footer class=footer>
+                <p>
+                Made by <a href="http://aurimas.eu">Aurimas</a> using R, Shiny, and Plotly. Browse the source code at Github.</p></footer>
+        </div>
+        <div class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+            <div class=row>
+                <div class="col-md-3">
+                    <h3>Algorithm selection</h3>
+                    <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="algorithm">ML algorithm</label>
+                        <select id="algorithm" class="form-control" name=algorithm>
+                            <option value="glm">Logistic regression</option>
+                            <option value="svmPoly">SVM</option>
+                            <option value="rf">Random forests</option>
+                            <option value="rpart">Decision trees</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group shiny-input-container">
+                            <label for="threshold">
+                                Probability threshold to predict survival</label>
+                                <input class="js-range-slider" id="threshold" data-min="0" data-max="1" 
+                                    data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" 
+                                    data-grid-snap="false" data-prettify-separator="," data-keyboard="true"
+                                    data-keyboard-step="1.11111111111111"
+                                    data-drag-interval="true" data-data-type="number"/>
+                        </div>
+                    </div>
+                    <div id ="cvtech" class="form-group shiny-input-radiogroup shiny-input-container">
+                        <label>Cross validation technique</label>
+                        <div class="shiny-options-group">
+                            <div class=radio>
+                                <label>
+                                    <input type="radio" name="cvtech" id="cvtech1" value="None">
+                                    None
+                                </label>
+                            </div>
+                            <div class=radio>
+                                <label>
+                                    <input type="radio" name="cvtech" id="cvtech2" value="cv10" checked>
+                                    10-fold cross-validation
+                                </label>
+                            </div>
+                            <div class=radio>
+                                <label>
+                                    <input type="radio" name="cvtech" id="cvtech1" value="loocv">
+                                    Leave-one-out cross validation
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <h3>Feature selection</h3>
+                    
+                    <div id="features" class="form-group shiny-input-checkboxgroup shiny-input-container">
+                        <label>Features to be included</label>
+                        <div class="shiny-options-group">
+                            <div class="checkbox">
+                                <label><input type="checkbox" name=features value="pclass" checked>Passenger class</label>
+                            </div>
+                            <div class="checkbox">
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name=features value="name">Name</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name=features value="sex" checked>Sex</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name=features value="age" checked>Age</label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name=features value="sibsb">
+                                    Number of siblings/spouses aboard
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name=features value="parch">
+                                    Number of parents/children aboard
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name=features value="ticket">Ticket number</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name=features value="fare">Passenger Fare</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name=features value="cabin">Cabin</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name=features value="embarked">Port of Embarkation</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md-6 bg-success">
+                    <h3 class="text-center">Algorithm evaluation</h3>
+                    <p id="shiny_algorithm" class="shiny-text-output"></p>
+                    <p id="shiny_threshold" class="shiny-text-output"></p>
+                    <p id="shiny_cvtechnique" class="shiny-text-output"></p>
+                    <p id="shiny_features" class="shiny-text-output"></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="assets/ie10-viewport-bug-workaround.js"></script>
+    <script src="shared/shiny.js" type="text/javascript"></script>
+    <script src="//code.highcharts.com/highcharts.js"></script>
+    <script type='text/javascript' src='shared/ionrangeslider/js/ion.rangeSlider.min.js'></script>
+    <!--<script type='text/javascript' src='shared/slider/js/jquery.slider.min.js'></script> -->
+    
+
+  </body>
+</html>
