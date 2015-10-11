@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="shared/ionrangeslider/css/ion.rangeSlider.css">
     <link rel="stylesheet" href="shared/ionrangeslider/css/normalize.css">
-    <link rel="stylesheet" href="shared/ionrangeslider/css/ion.rangeSlider.skinHTML5.css">
+    <link rel="stylesheet" href="shared/ionrangeslider/css/ion.rangeSlider.skinNice.css">
 
     <!-- Optional theme
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
@@ -57,139 +57,225 @@
             <p>
             This web app allows you to try out explore relationships between variables in a real set of data taken from <a href="https://www.kaggle.com/c/titanic/">Titanic passenger survival competition on Kaggle</a>. 
             <br>
-            <br>Choose which variables to plot, how to plot them and which factor to use for filling!
+            <br>Choose which variables to plot and how to plot them. <br><br>And when you feel like you explored enough - see how your imaginary passenger may have fared during the disaster.
             </p>
             <br><br>
             <footer class=footer>
                 <p>
-                Made by <a href="http://aurimas.eu">Aurimas</a> using R, Shiny, and Plotly. Browse the source code at Github.</p></footer>
+                Made by <a href="http://aurimas.eu">Aurimas</a> using <a href="https://www.r-project.org/">R</a> and <a href="http://www.shinyapps.io/">Shiny</a>. Browse the source code on Github.</p></footer>
         </div>
-        <div class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-5 col-md-5 col-md-offset-2 main">
+            <h3 class=text-center>Explore variable relationships</h3>
+            <p class="small text-justify">The chart below is rendered based on your choices of variables, with outcome
+                (survived or not) used for colouring. The chart will automatically change if you choose only X-axis
+                variable (density plot), X-Y (scatterplot) or a faceted scatterplot
+            </p>
+            <div class="form-group shiny-input-container row">
+                <label for=pclass class="control-label col-sm-6">Passenger class</label>
+                <div class=col-sm-6>
+                    <select id="pclass" class="form-control col-sm-6">
+                        <option value="None">Do not show</option>
+                        <option value="x" selected>Show on X-axis</option>
+                        <option value="y">Show on Y-axis</option>
+                        <option value="x-facet">Facet on X-axis</option>
+                        <option value="y-facet">Facet on Y-axis</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group shiny-input-container row">
+                <label for=sex class="control-label col-sm-6">Sex</label>
+                <div class=col-sm-6>
+                    <select id="sex" class="form-control col-sm-6">
+                        <option value="None">Do not show</option>
+                        <option value="x">Show on X-axis</option>
+                        <option value="y">Show on Y-axis</option>
+                        <option value="x-facet" selected>Facet on X-axis</option>
+                        <option value="y-facet">Facet on Y-axis</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group shiny-input-container row">
+                <label class="control-label col-sm-6">Age</label>
+                <div class=col-sm-6>
+                    <select id="age" class="form-control col-sm-6">
+                        <option value="None">Do not show</option>
+                        <option value="x">Show on X-axis</option>
+                        <option value="y">Show on Y-axis</option>
+                        <option value="x-facet">Facet on X-axis</option>
+                        <option value="y-facet">Facet on Y-axis</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group shiny-input-container row">
+                <label class="control-label col-sm-6">Number of siblings/spouses aboard</label>
+                <div class=col-sm-6>
+                    <select id="sibsp" class="form-control col-sm-6">
+                        <option value="None">Do not show</option>
+                        <option value="x">Show on X-axis</option>
+                        <option value="y">Show on Y-axis</option>
+                        <option value="x-facet">Facet on X-axis</option>
+                        <option value="y-facet">Facet on Y-axis</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group shiny-input-container row">
+                <label class="control-label col-sm-6">Number of parents/children aboard</label>
+                <div class=col-sm-6>
+                    <select id="parch" class="form-control col-sm-6">
+                        <option value="None">Do not show</option>
+                        <option value="x">Show on X-axis</option>
+                        <option value="y">Show on Y-axis</option>
+                        <option value="x-facet">Facet on X-axis</option>
+                        <option value="y-facet">Facet on Y-axis</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group shiny-input-container row">
+                <label class="control-label col-sm-6">Passenger fare</label>
+                <div class=col-sm-6>
+                    <select id="fare" class="form-control col-sm-6">
+                        <option value="None">Do not show</option>
+                        <option value="x">Show on X-axis</option>
+                        <option value="y">Show on Y-axis</option>
+                        <option value="x-facet">Facet on X-axis</option>
+                        <option value="y-facet">Facet on Y-axis</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group shiny-input-container row">
+                <label class="control-label col-sm-6">Port of embarkation</label>
+                <div class=col-sm-6>
+                    <select id="embarked" class="form-control col-sm-6">
+                        <option value="None">Do not show</option>
+                        <option value="x">Show on X-axis</option>
+                        <option value="y">Show on Y-axis</option>
+                        <option value="x-facet">Facet on X-axis</option>
+                        <option value="y-facet">Facet on Y-axis</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group shiny-input-container row">
+                <label class="control-label col-sm-6">Cabin</label>
+                <div class=col-sm-6>
+                    <select id="cabin" class="form-control col-sm-6">
+                        <option value="None">Do not show</option>
+                        <option value="x">Show on X-axis</option>
+                        <option value="y">Show on Y-axis</option>
+                        <option value="x-facet">Facet on X-axis</option>
+                        <option value="y-facet">Facet on Y-axis</option>
+                    </select>
+                </div>
+            </div>
+            <div class=row>            
+                <div id="shiny_plot" class="shiny-plot-output col-md-12"></div>
+            </div>
+        </div>
+        <div class="col-sm-5 col-md-5 main">
             <div class=row>
-                <div class="col-md-3">
-                    <h3>Variable selection</h3>
-                    
-                    <div id="features" class="form-group shiny-input-radiogroup shiny-input-container">
-                        <label>Variable on X axis</label>
-                        <div class="shiny-options-group">
-                            <div class="radio">
-                                <label><input type="radio" name=features value="pclass">Passenger class</label>
-                            </div>
-                            <div class="radio">
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=features value="name">Name</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=features value="sex">Sex</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=features value="age">Age</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name=features value="sibsp">
-                                    Number of siblings/spouses aboard
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name=features value="parch">
-                                    Number of parents/children aboard
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=features value="ticket">Ticket number</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=features value="fare" checked>Passenger Fare</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=features value="cabin">Cabin</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=features value="embarked">Port of Embarkation</label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="featuresy" class="form-group shiny-input-radiogroup shiny-input-container">
-                        <label>Variable on Y axis</label>
-                        <div class="shiny-options-group">
-                            
-                            <div class="radio">
-                                <label><input type="radio" name=featuresy value="">None</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=featuresy value="pclass">Passenger class</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=featuresy value="name">Name</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=featuresy value="sex">Sex</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=featuresy value="age" checked>Age</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name=featuresy value="sibsp">
-                                    Number of siblings/spouses aboard
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name=featuresy value="parch">
-                                    Number of parents/children aboard
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=featuresy value="ticket">Ticket number</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=featuresy value="fare">Passenger Fare</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=featuresy value="cabin">Cabin</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name=featuresy value="embarked">Port of Embarkation</label>
-                            </div>
-                        </div>
+                <h3 class="text-center">Let's predict survival!</h3>
+                <p class="small text-justify">Now that you know a bit about variables and their relationships to
+                    survival, let's try to see what probability a passenger you create has to survive. Choose 
+                    passenger parameters below and hit Calculate. The predictions are based on a model trained with
+                    random forests (OOB error of <span id="shiny_accuracy" class="shiny-text-output">?%</span>).
+                </p>
+                <div class="form-group shiny-input-container row">
+                <label for=predict_pclass class="control-label col-sm-6">Passenger class</label>
+                <div class=col-sm-6>
+                    <select id="predict_pclass" class="form-control col-sm-6">
+                        <option value="1">First Class</option>
+                        <option value="2">Second Class</option>
+                        <option value="3">Third Class</option>
+                    </select>
+                </div>
+                </div>
+                <div class="form-group shiny-input-container row">
+                    <label for=predict_sex class="control-label col-sm-6">Sex</label>
+                    <div class=col-sm-6>
+                        <select id="predict_sex" class="form-control col-sm-6">
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                        </select>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <h3>Chart selection</h3>
-                    <div id ="chart" class="form-group shiny-input-radiogroup shiny-input-container">
-                        <label>Chart type</label>
-                        <div class="shiny-options-group">
-                            <div class=radio>
-                                <label>
-                                    <input type="radio" name="chart" id="cvtech1" value="density">
-                                    Density plot (X variable; split by outcome)
-                                </label>
-                            </div>
-                            <div class=radio>
-                                <label>
-                                    <input type="radio" name="chart" id="cvtech2" value="scatter">
-                                    Scatter plot (X - Y variable; outcome used for colour)
-                                </label>
-                            </div>
-                            <div class=radio>
-                                <label>
-                                    <input type="radio" name="chart" id="cvtech1" value="facet" checked>
-                                    Facet scatter plot (same as scatter plot, but additionally faceted by sex and passenger class)
-                                </label>
-                            </div>
-                        </div>
+                <div class="form-group shiny-input-container row">
+                    <label class="control-label col-sm-6">Age</label>
+                    <div class=col-sm-6>
+                        <input 
+                            class="js-range-slider" id="predict_age"
+                            data-min="0" data-max="80" data-from="30" data-step="1"
+                            data-grid="false" data-grid-num="9" data-grid-snap="false"
+                            data-prettify-separator="," data-keyboard="true"
+                            data-keyboard-step="11.1111111111111" data-drag-interval="true"
+                            data-data-type="number"
+                        />
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <h3 class="text-center">Chart output</h3>
-                    
-                    <div id="shiny_plot" class="shiny-plot-output" style="width: 100% ; height: 400px"></div> 
+                <div class="form-group shiny-input-container row">
+                    <label class="control-label col-sm-6">Number of siblings/spouses aboard</label>
+                    <div class=col-sm-6>
+                        <input 
+                            class="js-range-slider" id="predict_sibsp"
+                            data-min="0" data-max="5" data-from="0" data-step="1"
+                            data-grid="false" data-grid-num="9" data-grid-snap="false"
+                            data-prettify-separator="," data-keyboard="true"
+                            data-keyboard-step="11.1111111111111" data-drag-interval="true"
+                            data-data-type="number"
+                        />
+                    </div>
                 </div>
+                <div class="form-group shiny-input-container row">
+                    <label class="control-label col-sm-6">Number of parents/children aboard</label>
+                    <div class=col-sm-6>
+                        <input 
+                            class="js-range-slider" id="predict_parch"
+                            data-min="0" data-max="6" data-from="0" data-step="1"
+                            data-grid="false" data-grid-num="9" data-grid-snap="false"
+                            data-prettify-separator="," data-keyboard="true"
+                            data-keyboard-step="11.1111111111111" data-drag-interval="true"
+                            data-data-type="number"
+                        />
+                    </div>
+                </div>
+                <div class="form-group shiny-input-container row">
+                    <label class="control-label col-sm-6">Passenger fare</label>
+                    <div class=col-sm-6>
+                        <input 
+                            class="js-range-slider" id="predict_fare"
+                            data-min="0" data-max="65" data-from="19" data-step="1"
+                            data-grid="false" data-grid-num="9" data-grid-snap="false"
+                            data-prettify-separator="," data-keyboard="true"
+                            data-keyboard-step="11.1111111111111" data-drag-interval="true"
+                            data-data-type="number"
+                        />
+                    </div>
+                </div>
+                <div class="form-group shiny-input-container row">
+                    <label class="control-label col-sm-6">Port of embarkation</label>
+                    <div class=col-sm-6>
+                        <select id="predict_embarked" class="form-control col-sm-6">
+                            <option value="C">Cherbourg</option>
+                            <option value="Q">Queenstown</option>
+                            <option value="S">Southampton</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group shiny-input-container row">
+                    <label class="control-label col-sm-6">Port of embarkation</label>
+                    <div class=col-sm-6>
+                        <select id="predict_cabin" class="form-control col-sm-6">
+                            <option value="">Unknown</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                            <option value="T">T</option>
+                        </select>
+                    </div>
+                </div>
+                <h4>Survival probability is <em id="shiny_survival" class="shiny-text-output">?%</em></h4>
             </div>
         </div>
       </div>
