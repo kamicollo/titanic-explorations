@@ -33,7 +33,11 @@ percent <- function(x, digits = 2, format = "f", ...) {
 train = cleanData(fread("data/train.csv"))
 train[, .outcome := as.factor(survived)][, survived := NULL]
 
-model = randomForest(.outcome ~ ., data = train, importance = TRUE, proximity = TRUE)
+if (file.exists("model.rda")) {
+    load("model.rda")
+} else {
+    model = randomForest(.outcome ~ ., data = train, importance = TRUE, proximity = TRUE)
+}
 
 sample = train[1]
 
